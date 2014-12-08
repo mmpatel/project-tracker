@@ -1,0 +1,26 @@
+<div id="1">
+  <%=link_to "Home",root_path %>>Add project
+</div>
+
+
+<%= nested_form_for [@user, @project] do |f| %>
+  <p>
+    <%= f.label :Name %>
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <%= f.label :Description %>
+    <%= f.text_area :description %>
+  </p>
+
+  <%= f.fields_for :teams do |team_form| %>
+    <%= f.label :Email %>
+    <%= team_form.text_field :email %>
+    <%= team_form.link_to_remove "Remove this member" %>
+  <% end %>
+  <%= f.link_to_add "Add a team", :teams %>
+  <p>
+    <%= f.submit "Add project" %>
+  </p>
+<% end %>

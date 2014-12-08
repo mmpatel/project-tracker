@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <title>Project_Tracker App</title>
+    <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <%= csrf_meta_tags %>
+
+  </head>
+  <body>
+  <div>
+  <%= nav_bar  do%>
+     <%= menu_group :pull => :right do %>
+        <% if current_user %>
+          <% if current_user.admin %>
+            <%= menu_item "Admin",root_path%>
+          <%end%>
+          <%= menu_item current_user.email%>
+          <%= menu_item "Sign out", signout_path, id: "sign_out" %>
+        <% else %>
+          <%= menu_item "Sign in", "/auth/google_oauth2", id: "sign_in" %>
+        <% end %>
+     <%end%>
+  <%end%>
+
+  </div>
+  <div class="container" >
+    <%= yield %>
+  </div>
+  <% flash.each do |name, msg| %>
+    <%= content_tag :div, msg %>
+  <% end %>
+  </body>
+</html>
