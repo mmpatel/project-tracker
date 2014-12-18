@@ -37,6 +37,7 @@ gem "nested_form"
 gem "less-rails"
 gem "breadcrumbs_on_rails"
 gem "acts_as_list"
+gem "therubyracer"
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
@@ -44,7 +45,6 @@ end
 
 group :development do
   gem 'pry-nav'
-  gem "therubyracer"
 end
 
 # Use ActiveModel has_secure_password
