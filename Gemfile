@@ -33,6 +33,7 @@ gem 'jbuilder', '~> 1.2'
 gem 'heroku'
 gem 'rails_12factor', group: :production
 gem "twitter-bootstrap-rails"
+gem "nested_form"
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
@@ -42,7 +43,6 @@ group :development do
   gem 'pry-nav'
   gem "therubyracer"
   gem "less-rails"
-  gem "nested_form"
   gem "breadcrumbs_on_rails"
   gem "acts_as_list"
 end
