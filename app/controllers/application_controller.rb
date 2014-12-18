@@ -20,4 +20,10 @@ class ApplicationController < ActionController::Base
       redirect_to signout_path
     end
   end
+
+  def authenticate_admin!
+    if current_user and !current_user.is_admin?
+      raise CanCan::AccessDenied.new("Not authorized!")
+    end
+  end
 end

@@ -1,0 +1,45 @@
+<div class="page-header">
+  <h1>Add Issue</h1>
+</div>
+
+<%= form_for [@project, @workflow, @issue] do |f| %>
+  <% if@issue.errors.any? %>
+    <% @issue.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  <%end%>
+  <div>
+    <%= f.label :title%>
+    <%= f.text_field :title %>
+  </div>
+  <div>
+    <%= f.label :description %>
+    <%= f.text_area :description %>
+  </div>
+  <div>
+    <%= f.label :state %>
+    <%= f.text_field :state %>
+  </div>
+  <div>
+    <%= f.label :assigned_to %>
+    <%= f.select :assigned_to, @users.map{ |user| [user.name, user.id] } %>
+  </div>
+  <div>
+    <%= f.label :completed_by %>
+    <%= f.date_select :completed_by, :start_year =>Date.current.year+10, :end_year => 1920 %>
+  </div>
+  <div>
+    <%= f.label :started_on %>
+    <%= f.date_select :started_on, :start_year =>Date.current.year, :end_year => 1920 %>
+  </div>
+  <div>
+    <%= f.label :estimate %>
+    <%= f.text_field :estimate %>
+  </div>
+  <div>
+    <%= f.label :issue_type %>
+    <%= f.text_field :issue_type %>
+  </div>
+
+  <%= f.submit "submit", class: 'btn btn-primary' %>
+<% end %>

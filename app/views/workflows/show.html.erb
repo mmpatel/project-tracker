@@ -1,0 +1,21 @@
+<div class= "page-header">
+  <h1><%= @workflow.name.capitalize %></h1>
+  <%= link_to "Add Issue", new_project_workflow_issue_path( @project, @workflow ), class: 'pull-right btn btn-primary'%>
+</div>
+
+<table class='table'>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @workflow.issues.each do |issue| %>
+      <tr>
+        <td><%= issue.title %></td>
+        <td><%= issue.description %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

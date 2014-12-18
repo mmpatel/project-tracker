@@ -6,28 +6,34 @@
     <%= csrf_meta_tags %>
 
   </head>
+  <%= yield :javascript %>
   <body>
-  <div>
-  <%= nav_bar  do%>
-     <%= menu_group :pull => :right do %>
-        <% if current_user %>
-          <% if current_user.admin %>
-            <%= menu_item "Admin",root_path%>
+    <div>
+      <%= nav_bar  do %>
+        <%= menu_group :pull => :right do %>
+          <% if current_user %>
+            <% if can? :manage, User %>
+              <%= menu_item "Admin", users_path %>
+            <%end%>
+            <%= menu_item current_user.email%>
+            <%= menu_item "Sign out", signout_path, id: "sign_out" %>
+          <% else %>
+            <%= menu_item "Sign_in with Google", "/auth/google_oauth2", id: "sign_in" %>
+          <% end %>
+        <%end%>
+          <%= menu_group :pull => :left do %>
+            <% if current_user %>
+              <h3><%= menu_item "Project_tracker", user_projects_path(current_user)%></h3>
+            <%else%>
+              <h3><%= menu_item "Project_tracker",root_path%></h3>
+            <%end%>
           <%end%>
-          <%= menu_item current_user.email%>
-          <%= menu_item "Sign out", signout_path, id: "sign_out" %>
-        <% else %>
-          <%= menu_item "Sign in", "/auth/google_oauth2", id: "sign_in" %>
-        <% end %>
-     <%end%>
-  <%end%>
-
-  </div>
-  <div class="container" >
-    <%= yield %>
-  </div>
-  <% flash.each do |name, msg| %>
-    <%= content_tag :div, msg %>
-  <% end %>
+      <%end%>
+    </div>
+    <div class="container" >
+      <%= render_breadcrumbs %>
+      <%= flash_messages %>
+      <%= yield %>
+    </div>
   </body>
 </html>

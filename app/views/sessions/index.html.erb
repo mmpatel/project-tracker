@@ -1,0 +1,9 @@
+<table>
+  <% @users.each do |user| %>
+    <%if !user.admin%>
+      <tr>
+        <td><%=user.name%>(<%=link_to user.email ,edit_session_path(user.id)%>)</td>
+      </tr>
+    <%end%>
+  <% end %>
+</table>

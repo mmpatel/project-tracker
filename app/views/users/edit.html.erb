@@ -1,0 +1,21 @@
+<%= form_for @user do |f| %>
+  <p>
+    Email: <%=@user.email%>
+  </p>
+  <p>
+     <%= f.label :Admin %>
+     <%= f.check_box :admin %>
+  </p>
+  <p>
+    <%= f.label :blocked %>
+    <%= f.check_box :blocked %>
+  </p>
+  <p>
+    <%= f.label :can_create_projects %>
+    <%= f.check_box :can_create_projects %>
+  </p>
+
+  <p>
+    <%= f.submit "Update" ,class:"btn btn-success"%>
+  </p>
+<%end%>

@@ -7,10 +7,25 @@ Projecttracker::Application.routes.draw do
   resources :sessions, only: [:create, :destroy]
   resource :home, only: [:index]
 
-  resources :users, only: [] do
-    resources :projects
+  resources :admins, only: [] do
+    collection do
+      resources :users, only:[:index, :edit, :update]
+    end
   end
 
+  resources :users, only: [] do
+    resources :projects, only:[:new, :index]
+  end
+
+  resources :projects do
+    resources :workflows do
+      resources :issues, only: [:new, :create]
+    end
+  end
+
+  resources :issues, only: [] do
+    post :sort, on: :collection
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

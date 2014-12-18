@@ -4,7 +4,8 @@ source 'https://rubygems.org'
 gem 'rails', '4.0.3'
 
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+#gem 'sqlite3'
+gem 'pg'
 gem 'omniauth-google-oauth2'
 gem 'cancancan'
 
@@ -40,6 +41,8 @@ group :development do
   gem "less-rails"
   gem "twitter-bootstrap-rails"
   gem "nested_form"
+  gem "breadcrumbs_on_rails"
+  gem "acts_as_list"
 end
 
 # Use ActiveModel has_secure_password

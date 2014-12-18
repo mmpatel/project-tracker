@@ -8,7 +8,7 @@ Bundler.require(:default, Rails.env)
 
 module Projecttracker
   class Application < Rails::Application
-    config.admins = %w{nchoudhary@grepruby.com}
+    config.admins = %w{projecttracker007@gmail.com}
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

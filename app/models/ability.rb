@@ -3,12 +3,16 @@ class Ability
 
   def initialize(user)
     if user
-      can :read, User, :id => user.id
-      can :read, Project do |p|
-        p.creator_id = user.id
-      end
-      can :create,Project do |p|
-        p.creator_id = user.id
+      if user.is_admin?
+        can :manage, User
+        can :manage, Project
+      else
+        can :read, User, :id => user.id
+
+        can :read, Project do |project|
+          project.user_id  == user.id || project.teams.map(&:user_id).include?(user.id)
+        end
+
       end
     end
     # Define abilities for the passed in user here. For example:

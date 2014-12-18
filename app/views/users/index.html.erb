@@ -1,0 +1,22 @@
+<table class='table'>
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Edit Access</th>
+  </tr>
+  <% @users.each do |user| %>
+    <% unless user.is_admin? %>
+      <tr>
+        <td>
+          <%= user.name %>
+        </td>
+        <td>
+          <%= user.email %>
+        </td>
+        <td>
+          <%= link_to "Edit", edit_user_path(user.id),class: "btn btn-primary" %>
+        </td>
+      </tr>
+    <%end%>
+  <% end %>
+</table>
