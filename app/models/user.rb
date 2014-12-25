@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   has_many :projects, dependent: :destroy
   has_many :teams, dependent: :destroy
   has_many :issues, dependent: :destroy, :foreign_key => :creator_id
-  has_many :comments, dependent: :destroy, :foreign_key => :creator_id
+  has_many :comments, dependent: :destroy
   after_create :check_for_admin
   after_create :check_for_team_member
 

@@ -25,10 +25,13 @@ GEM
       multi_json (~> 1.3)
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
+    acts_as_commentable (4.0.2)
     acts_as_list (0.5.0)
       activerecord (>= 3.0)
     addressable (2.3.6)
     arel (4.0.2)
+    bootstrap-datepicker-rails (1.3.1.0)
+      railties (>= 3.0)
     breadcrumbs_on_rails (2.3.0)
     builder (3.1.4)
     cancancan (1.9.2)
@@ -183,7 +186,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts_as_commentable
   acts_as_list
+  bootstrap-datepicker-rails
   breadcrumbs_on_rails
   cancancan
   coffee-rails (~> 4.0.0)

@@ -14,16 +14,20 @@ Projecttracker::Application.routes.draw do
   end
 
   resources :users, only: [] do
-    resources :projects, only:[:new, :index]
+    resources :projects, only:[:new, :index, :edit, :create, :update ,:destroy]
   end
 
-  resources :projects do
+  resources :projects, only: [:show] do
     resources :workflows do
-      resources :issues, only: [:new, :create]
+      resources :issues, only: [:new, :create, :show]
     end
   end
 
   resources :issues, only: [] do
+    post :sort, on: :collection
+    post :add_comment, on: :member
+  end
+  resources :workflows, only: [] do
     post :sort, on: :collection
   end
   # The priority is based upon order of creation: first created -> highest priority.

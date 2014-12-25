@@ -1,9 +1,10 @@
 class IssuesController < ApplicationController
   before_filter :authenticate_user!
   before_filter :issue_params
-  load_and_authorize_resource :project, :except => [:sort]
-  load_resource :workflow ,:except => [:sort]
-  load_resource :issue, :through => :workflow, :except => [:sort]
+  load_and_authorize_resource :project, :except => [:sort, :add_comment]
+  load_resource :workflow ,:except => [:sort, :add_comment]
+  load_resource :issue, :through => :workflow, :except => [:sort, :add_comment]
+  load_resource :issue, :only => [:add_comment]
   respond_to :html, :js
 
 
@@ -25,11 +26,19 @@ class IssuesController < ApplicationController
     if @issue.save
       flash[:success] = "Issue is created successfully"
       redirect_to project_path(@project)
-      #redirect_to user_project_workflow_path(current_user, @project, @workflow)
     else
+      @users = User.joins(:teams).where("teams.project_id = ?", @project.id)
       flash[:error] = "Issue is not created successfully"
       render :new
     end
+  end
+
+  def show
+    add_breadcrumb "Projects", user_projects_path(current_user)
+    add_breadcrumb @project.name, project_path(@project)
+    add_breadcrumb @workflow.name, project_workflow_path(@project, @workflow)
+    add_breadcrumb @issue.title, project_workflow_issue_path(@project, @workflow, @issue)
+    @comments=@issue.comments
   end
 
   def sort
@@ -50,6 +59,14 @@ class IssuesController < ApplicationController
       end
     end
     render :nothing => true, :status => 200, :content_type => 'text/html'
+  end
+
+  def add_comment
+    comment = @issue.comments.create
+    comment.comment = params['comment']
+    comment.user_id = current_user.id
+    comment.save
+    redirect_to project_workflow_issue_path(@issue.project, @issue.workflow, @issue)
   end
 
 protected

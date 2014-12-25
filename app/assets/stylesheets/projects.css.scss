@@ -64,3 +64,13 @@ top: 21%;
 .default_card{
     display: none;
 }
+
+.ui-widget-content ,.ui-draggable, .ui-draggable-handle {
+    position: relative;
+    width: 165px;
+    right: auto;
+    height: 30px;
+    bottom: auto;
+    left: 0px;
+    top: 0px;
+}

@@ -1,22 +1,25 @@
 <div class="page-header">
   <h1> Projects </h1>
-</div>
 <% if current_user.can_create_projects %>
-  <div id="add_project_btn"><%= link_to "Add a project",new_user_project_path, class: "btn btn-primary" %>
-  </div>
+  <%= link_to "Add a project",new_user_project_path, class: 'pull-right btn btn-primary' %>
 <% end %>
+</div>
 <table class="table table-hover">
   <% if @projects.present? %>
     <tr>
       <th>Projects</th>
       <th>Description</th>
       <th>Show Project</th>
+      <th>Edit project</th>
+      <th>Delete project</th>
     </tr>
     <% @projects.each do |project| %>
       <tr>
         <td><%= project.name %></td>
         <td><%= project.description %></td>
         <td><%= link_to "show", project_path(project), class:"btn btn-primary" %></td>
+        <td><%= link_to "edit", edit_user_project_path(current_user, project), class:"btn btn-primary" %></td>
+        <td><%= link_to "delete", user_project_path(current_user, project), :confirm => 'Are you sure?',method: :delete ,class:"btn btn-primary" %></td>
       </tr>
     <% end %>
   <% else %>

@@ -1,0 +1,23 @@
+<div class= "page-header">
+  <h1><%= @issue.title.capitalize %></h1>
+  <div>
+    Description : <%= @issue.description.capitalize %>
+  </div>
+</div>
+<% @comments.each do |issue_comment|%>
+  User : <%= issue_comment.user.name%><br>
+  Comment : <%= issue_comment.comment%><br>
+<%end%>
+<br>
+<br>
+<%= form_tag add_comment_issue_path(@issue) do %>
+
+  <%= label_tag "Comment's title " %>
+  <%= text_field_tag "title" %>
+
+  <%= label_tag "Add Comment" %>
+  <%= text_area_tag 'comment', nil, size: "30x7"%>
+
+  <div><%= submit_tag "Add Comment", class: "btn btn-primary"%></div>
+<% end %>
+

@@ -1,6 +1,7 @@
 class ProjectsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :project_params, only: [:create]
+  load_and_authorize_resource :user, except: [:show]
   load_and_authorize_resource
 
     def index
@@ -11,19 +12,31 @@ class ProjectsController < ApplicationController
 
     def new
       add_breadcrumb "Projects", user_projects_path(current_user)
-      add_breadcrumb "Add project",:new_project_path
-      @project.teams.build
-      @project.workflows.build
+      add_breadcrumb "Add project", new_user_project_path(current_user)
+    end
+
+    def edit
+      add_breadcrumb "Projects", user_projects_path(current_user)
+      add_breadcrumb @project.name, project_path(@project)
+      teams=Team.joins(:project).where("teams.project_id = ?", @project.id)
+      workflows=Workflow.joins(:project).where("workflows.project_id = ?", @project.id)
+    end
+
+    def update
+      if @project.update(project_params)
+        redirect_to user_projects_path(current_user.id)
+      else
+        render 'edit'
+      end
     end
 
     def create
-      add_breadcrumb "Add project",:new_project_path
+      add_breadcrumb "Add project",new_user_project_path(current_user)
       @project.user_id = current_user.id
       if  @project.has_default_workflows?
         flash.now[:error] = "backlog and closed are already entered"
         render 'new'
       else
-        @project.teams.build(user_id: current_user.id, email: current_user.email, access_level: "owner")
         if @project.save
           redirect_to root_path
         else
@@ -37,10 +50,17 @@ class ProjectsController < ApplicationController
       add_breadcrumb @project.name
     end
 
+    def destroy
+      @project = Project.find(params[:id])
+      @project.destroy
+      redirect_to root_path
+    end
+
 private
 
   def project_params
-    params.require(:project).permit(:name, :description, teams_attributes: [:id, :access_level, :user_id,:project_id, :email],workflows_attributes:[:id,:name,:tag,:project_id])
+    params.require(:project).permit(:name, :description, teams_attributes: [:id, :access_level, :user_id, :project_id, :email, :_destroy],workflows_attributes: [:id, :name, :tag, :project_id, :_destroy])
+
   end
 
 end
