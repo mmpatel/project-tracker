@@ -19,7 +19,11 @@
         <td><%= project.description %></td>
         <td><%= link_to "show", project_path(project), class:"btn btn-primary" %></td>
         <td><%= link_to "edit", edit_user_project_path(current_user, project), class:"btn btn-primary" %></td>
-        <td><%= link_to "delete", user_project_path(current_user, project), :confirm => 'Are you sure?',method: :delete ,class:"btn btn-primary" %></td>
+        <% if current_user.can_create_projects %>
+          <td><%= link_to "delete", user_project_path(current_user, project), :confirm => 'Are you sure?',method: :delete ,class:"btn btn-primary" %></td>
+        <%else%>
+          <td>No Privilage</td>
+        <%end%>
       </tr>
     <% end %>
   <% else %>
