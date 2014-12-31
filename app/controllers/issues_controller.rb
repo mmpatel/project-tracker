@@ -14,6 +14,7 @@ class IssuesController < ApplicationController
     add_breadcrumb @workflow.name, project_workflow_path(@project, @workflow)
     add_breadcrumb "Issue"
     @users = User.joins(:teams).where("teams.project_id = ?", @project.id)
+
   end
 
   def create
@@ -71,7 +72,7 @@ class IssuesController < ApplicationController
 
 protected
   def issue_params
-  params.require(:issue).permit(:id, :creator_id, :description, :title, :state,:assigned_to, :completed_by, :started_on, :estimate, :issue_type,          :workflow_id ,:project_id) if params[:issue]
+  params.require(:issue).permit(:id, :creator_id, :description, :title, :state,:assigned_to, :completed_by, :started_on, :estimate, :issue_type,          :workflow_id ,:project_id, attachments_attributes: [:id, :type, :model_id, :avatar, :creator_id, :issue_id, :_destroy]) if params[:issue]
   end
 
 end

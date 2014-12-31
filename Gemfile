@@ -41,6 +41,9 @@ gem "breadcrumbs_on_rails"
 gem "acts_as_list"
 gem 'acts_as_commentable'
 gem "therubyracer"
+gem 'carrierwave'
+gem "rmagick"
+gem "mini_magick"
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false

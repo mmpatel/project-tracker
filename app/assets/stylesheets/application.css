@@ -9,9 +9,11 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require bootstrap-datepicker3
+ *= require datepicker
+ *= require bootstrap_and_overrides
  *= require_tree .
  */
+
 
 input[type="text"]{
   height: 30px !important;

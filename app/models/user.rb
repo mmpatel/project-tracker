@@ -20,7 +20,11 @@ class User < ActiveRecord::Base
   end
 
   def is_admin?
-    Rails.application.config.admins.include?(email.downcase)
+    if self.admin
+      true
+    else
+      Rails.application.config.admins.include?(email.downcase)
+    end
   end
 
   def states

@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require jquery-1.11.1
+//= require bootstrap-datepicker1
 //= require jquery_ujs
 //= require bootstrap-datepicker/core
 //= require twitter/bootstrap

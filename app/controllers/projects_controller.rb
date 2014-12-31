@@ -7,7 +7,6 @@ class ProjectsController < ApplicationController
     def index
       @projects = current_user.available_projects unless current_user.is_admin?
       add_breadcrumb "Projects"
-      flash.now[:error]="You don't have privilage yet to create project" unless current_user.can_create_projects
     end
 
     def new

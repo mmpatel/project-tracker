@@ -5,7 +5,6 @@
     <th>Edit Access</th>
   </tr>
   <% @users.each do |user| %>
-    <% unless user.is_admin? %>
       <tr>
         <td>
           <%= user.name %>
@@ -17,6 +16,5 @@
           <%= link_to "Edit", edit_user_path(user.id),class: "btn btn-primary" %>
         </td>
       </tr>
-    <%end%>
   <% end %>
 </table>
