@@ -107,9 +107,4 @@
       }
     })(jQuery)
 
-    <% @project.teams.each do |team| %>
-       $(function() {
-          $( "#<%= team.user.id %>" ).draggable({ revert: true});
-        });
-    <%end%>
 </script>
