@@ -107,4 +107,13 @@
       }
     })(jQuery)
 
+    <% @project.teams.each do |team| %>
+      <% if team.user.present? %>
+         $(function() {
+            $( ".ui-widget-content" ).draggable({
+              revert :true
+            }).css("z-index",1000);
+          });
+      <%end%>
+    <%end%>
 </script>
