@@ -67,8 +67,6 @@ var checkin = $('#dp1').datepicker({
     }
     $('#dp2')[0].focus();
 });
-
-
 var checkout = $('#dp2').datepicker({
     beforeShowDay: function (date) {
         return date.valueOf() > checkin.datepicker("getDate").valueOf();

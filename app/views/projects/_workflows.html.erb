@@ -1,0 +1,28 @@
+<div class="lists_wrapper">
+  <div class="lists_inner_wrapper">
+    <section class="lists ui-sortable" id='section-block'>
+      <% @project.workflows.each do |work_flow| %>
+        <div id='<%= work_flow.id %>' class="list workflowSortable">
+          <div class="issue_button">
+            <span><%= work_flow.name %></span>
+            <%= link_to "Add Issue", new_project_workflow_issue_path( @project, work_flow.id ), class: 'pull-right btn btn-primary'%>
+          </div>
+          <ul id=<%= "work_flow_"+work_flow.id.to_s %> class="issueSortable
+            issues_ul" >
+            <li class="card default_card"></li>
+            <% work_flow.issues.each do |issue| %>
+              <li class="cart card ui-state-default" id= '<%= issue.id %>' > <%= issue.title %><br>
+                  <% if issue.assigned_to.present? %>
+                    <span class= '<%= issue.assigned_to %>' >
+                      <%= User.find(issue.assigned_to).name %>
+                    </span>
+                  <%end%>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    </section>
+  </div>
+</div>
+

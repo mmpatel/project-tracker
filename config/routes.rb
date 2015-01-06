@@ -30,6 +30,9 @@ Projecttracker::Application.routes.draw do
   resources :workflows, only: [] do
     post :sort, on: :collection
   end
+  resources :projects, only: [] do
+    post :updateuser, on: :collection
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :project_params, only: [:create]
-  load_and_authorize_resource :user, except: [:show]
+  load_and_authorize_resource :user, except: [:show ,:updateuser]
   load_and_authorize_resource
 
     def index
@@ -27,6 +27,15 @@ class ProjectsController < ApplicationController
       else
         render 'edit'
       end
+    end
+
+    def updateuser
+      params['users'].each do |issue_id, user_id|
+        issue = Issue.find(issue_id.to_i)
+        issue.update_attributes(assigned_to: user_id.to_i)
+      end
+      issue = Issue.find(params['users'].keys[0].to_i)
+      @project = issue.workflow.project
     end
 
     def create

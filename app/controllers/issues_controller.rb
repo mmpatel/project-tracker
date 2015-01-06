@@ -62,6 +62,7 @@ class IssuesController < ApplicationController
     render :nothing => true, :status => 200, :content_type => 'text/html'
   end
 
+
   def add_comment
     comment = @issue.comments.create
     comment.comment = params['comment']

@@ -2,118 +2,20 @@
   <h1> Project Board </h1>
 </div>
 <div>
-  <%if backlog_workflow(@project).present?%>
+  <% if backlog_workflow(@project).present? %>
     <%= link_to "List Backlog", project_workflow_path( @project.id, backlog_workflow(@project).id ) %>
-  <%end%>
-  <%if closed_workflow(@project).present?%>
+  <% end %>
+  <% if closed_workflow(@project).present? %>
     <%= link_to "List Closed", project_workflow_path(@project.id, closed_workflow(@project).id ) %>
   <%end%>
 </div>
-<div class="lists_wrapper">
-  <div class="lists_inner_wrapper">
-    <table>
-      <tr>
-        Team Members :
-          <% @project.teams.each do |team| %>
-            <% if team.user.present? %>
-              <td>
-                <div id='<%= team.user.id %>' class="ui-widget-content">
-                  <p><%= team.user.name %></p>
-                </div>
-              </td>
-            <% end %>
-          <%end%>
-      </tr>
-    </table>
-    <section class="lists ui-sortable" id='section-block'>
-      <% @project.workflows.each do |work_flow| %>
-        <div id='<%= work_flow.id %>' class="list workflowSortable">
-          <div class="issue_button">
-            <span><%= work_flow.name %></span>
-            <%= link_to "Add Issue", new_project_workflow_issue_path( @project, work_flow.id ), class: 'pull-right btn btn-primary'%>
-          </div>
-          <ul id=<%= "work_flow_"+work_flow.id.to_s %> class="issueSortable issues_ul" >
-            <li class="card default_card"></li>
-            <% work_flow.issues.each do |issue| %>
-              <li class="card ui-state-default" id= '<%= issue.id %>' > <%= issue.title %><br>
-              <% if issue.assigned_to.present? %>
-                assign_to: <%= User.find(issue.assigned_to).name %>
-              <%else%>
-                assign_to: None
-              <%end%>
-              </li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
-    </section>
-  </div>
+<div class="catalog">
+  <% @project.teams.each do |team| %>
+    <% if team.user.present? %>
+      <li id="<%= team.user.id %>"><%= team.user.name %></li>
+    <% end %>
+  <%end%>
 </div>
 
-<script type="text/javascript">
-    $(function() {
-        $("#section-block").sortable({
-          connectWith: ".workflowSortable",
-          update: function(event, ui){
-            var workflow_positions = $('.workflowSortable').serialize_workflow();
-            var params = {}
-            params["work_flows"] = workflow_positions
-            $.ajax({
-              url: '/workflows/sort',
-              data: params,
-              type: "post"
-              }).done(function() {
-            });
-          }
-        }).disableSelection();
-        $("ul.issueSortable").sortable({
-            connectWith: ".issueSortable",
-            update: function(event, ui) {
-              var issues_positions = $('.issueSortable').serialize_issue();
-              var params = {}
-              params["work_flows"] = issues_positions
-              $.ajax({
-                url: '/issues/sort',
-                data: params,
-                type: "post"
-                }).done(function() {
-              });
-            }
-        }).disableSelection();
+<%= render partial: "workflows"%>
 
-    });
-    (function($) {
-      $.fn.serialize_issue = function() {
-        var workflows = {};
-        var $elem = $(this);
-        $elem.each(function(i) {
-          var menu = this.id;
-          var issues = {}
-          $('li', this).each(function(e) {
-            if(this.id)
-              issues[e] = this.id
-          });
-          workflows[menu] = issues
-        });
-        return workflows;
-      }
-      $.fn.serialize_workflow = function() {
-        var workflowpositions = [];
-        var $elem = $(this);
-        $elem.each(function(i) {
-          workflowpositions.push(this.id)
-        });
-        return workflowpositions;
-      }
-    })(jQuery)
-
-    <% @project.teams.each do |team| %>
-      <% if team.user.present? %>
-         $(function() {
-            $( ".ui-widget-content" ).draggable({
-              revert :true
-            }).css("z-index",1000);
-          });
-      <%end%>
-    <%end%>
-</script>
