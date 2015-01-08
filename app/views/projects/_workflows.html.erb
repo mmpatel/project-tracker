@@ -4,7 +4,9 @@
       <% @project.workflows.each do |work_flow| %>
         <div id='<%= work_flow.id %>' class="list workflowSortable">
           <div class="issue_button">
-            <span><%= work_flow.name %></span>
+            <span>
+              <%= link_to work_flow.name , project_workflow_path( @project.id, work_flow.id ) %>
+            </span>
             <%= link_to "Add Issue", new_project_workflow_issue_path( @project, work_flow.id ), class: 'pull-right btn btn-primary'%>
           </div>
           <ul id=<%= "work_flow_"+work_flow.id.to_s %> class="issueSortable

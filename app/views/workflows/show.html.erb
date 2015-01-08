@@ -8,7 +8,9 @@
     <tr>
       <th>Title</th>
       <th>Description</th>
+      <th>Edit</th>
       <th>Show</th>
+      <th>Attachments</th>
     </tr>
   </thead>
   <tbody>
@@ -16,7 +18,15 @@
       <tr>
         <td><%= issue.title %></td>
         <td><%= issue.description %></td>
+        <td><%= link_to "Edit", edit_project_workflow_issue_path(@project, @workflow, issue) %></td>
         <td><%= link_to "Show", project_workflow_issue_path(@project, @workflow, issue) %>
+        <% if issue.attachments.present? %>
+          <% issue.attachments.each do |attachment| %>
+            <td><%= link_to "download", attachment.avatar_url %></td>
+          <% end %>
+        <% else %>
+          <td>Not available</td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

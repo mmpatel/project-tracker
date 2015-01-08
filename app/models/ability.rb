@@ -21,6 +21,9 @@ class Ability
           can :update, Project do |project|
           project.user_id  == user.id || project.teams.map(&:user_id).include?(user.id)
           end
+          can :updateuser, Project do |project|
+          project.user_id  == user.id || project.teams.map(&:user_id).include?(user.id)
+          end
         end
       end
     end

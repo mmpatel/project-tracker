@@ -42,6 +42,26 @@ class IssuesController < ApplicationController
     @comments=@issue.comments
   end
 
+  def edit
+    add_breadcrumb "Projects", user_projects_path(current_user)
+    add_breadcrumb @project.name, project_path(@project)
+    add_breadcrumb @workflow.name, project_workflow_path(@project, @workflow)
+    add_breadcrumb "Issue"
+    @users = User.joins(:teams).where("teams.project_id = ?", @project.id)
+  end
+
+  def update
+    add_breadcrumb "Projects", user_projects_path(current_user)
+    add_breadcrumb @project.name, project_path(@project)
+    add_breadcrumb @workflow.name, project_workflow_path(@project, @workflow)
+    add_breadcrumb "Issue"
+    if @issue.update(issue_params)
+        redirect_to project_workflow_issue_path(@project, @workflow, @issue)
+      else
+        render 'edit'
+      end
+  end
+
   def sort
     params["work_flows"].each do |work_flow_name, issue_positions|
       workflow_id = work_flow_name.scan(/\d+/).map(&:to_i)[0]

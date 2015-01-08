@@ -19,7 +19,7 @@ Projecttracker::Application.routes.draw do
 
   resources :projects, only: [:show] do
     resources :workflows do
-      resources :issues, only: [:new, :create, :show]
+      resources :issues, only: [:new, :create, :show, :edit, :update]
     end
   end
 

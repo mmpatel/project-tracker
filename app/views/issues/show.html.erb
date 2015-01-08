@@ -1,7 +1,14 @@
 <div class= "page-header">
   <h1><%= @issue.title.capitalize %></h1>
   <div>
-    Description : <%= @issue.description.capitalize %>
+    Description : <%= @issue.description.capitalize %><br>
+    <% @issue.attachments.each do |attachment| %>
+           <% if %w{jpg png gif bmp pdf jpeg jfif exif tiff rif webp}.include?(attachment.avatar.file.extension.downcase) %>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Show</button>
+          <% else %>
+            <%= link_to "Download", attachment.avatar_url, class: "btn btn-primary"%>
+          <% end %>
+        <% end %>
   </div>
 </div>
 <% @comments.each do |issue_comment|%>
@@ -21,3 +28,23 @@
   <div><%= submit_tag "Add Comment", class: "btn btn-primary"%></div>
 <% end %>
 
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel"><%= @issue.title %></h4>
+      </div>
+      <div class="modal-body">
+        <% @issue.attachments.each do |attachment| %>
+           <% if %w{jpg png gif bmp pdf jpeg jfif exif tiff rif webp}.include?(attachment.avatar.file.extension.downcase) %>
+            <iframe src= '<%= attachment.avatar_url %>' width="500" height="500"> </iframe>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
