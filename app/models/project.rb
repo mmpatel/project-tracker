@@ -26,6 +26,6 @@ class Project < ActiveRecord::Base
   end
 
   def add_default_team
-    self.teams.create(user_id: user_id, email: user.email, access_level: "owner")
+    self.teams.create(user_id: user_id, email: user.email, access_level: "Owner")
   end
 end

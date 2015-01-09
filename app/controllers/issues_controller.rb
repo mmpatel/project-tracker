@@ -86,6 +86,7 @@ class IssuesController < ApplicationController
   def add_comment
     comment = @issue.comments.create
     comment.comment = params['comment']
+    comment.title = params['title']
     comment.user_id = current_user.id
     comment.save
     redirect_to project_workflow_issue_path(@issue.project, @issue.workflow, @issue)

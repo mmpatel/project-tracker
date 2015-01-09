@@ -16,7 +16,7 @@
   <%= f.fields_for :teams do |team_form| %>
     <%= f.label :Email %>
     <%= team_form.text_field :email %>
-    <%= team_form.select :access_level, [["Developer","Developer"]]%>
+    <%= team_form.select :access_level, [["Owner","Owner"],["Developer","Developer"]],:prompt => "Please select"%>
     <%= team_form.link_to_remove "Remove this member" %>
   <% end %>
   <%= f.link_to_add "Add a team", :teams %>
